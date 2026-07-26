@@ -349,12 +349,6 @@ class Component extends DCLogic {
   dotsRef = React.createRef();
   sheetRef = React.createRef();
   SPD = 3.5;
-  /* ===================== DA SOSTITUIRE ===================== */
-  /* Chiave API Brevo (v3) — Brevo > SMTP & API > API Keys      */
-  BREVO_API_KEY = 'xkeysib-SOSTITUIRE-CON-LA-TUA-CHIAVE';
-  /* ID numerico della lista "Lista d'attesa" in Brevo          */
-  BREVO_LIST_ID = 0;
-  /* ========================================================== */
 
   state = { sheet:null, sheetClosing:false, wlName:'', wlEmail:'', wlModel:'', wlSize:'', wlConsent:false,
             wlStatus:'idle', wlErr:'', wlErrs:{}, privacyOpen:false, okSize:'', okModel:'' };
@@ -379,31 +373,21 @@ class Component extends DCLogic {
     this.setState({wlErrs:{}, wlErr:'', wlStatus:'sending'});
     const {wlName,wlEmail,wlModel,wlSize}=this.state;
     try{
-      if(!this.BREVO_API_KEY || this.BREVO_API_KEY.indexOf('SOSTITUIRE')>=0 || !Number(this.BREVO_LIST_ID)) throw new Error('config');
-      const res=await fetch('https://api.brevo.com/v3/contacts',{
+      const res=await fetch('/.netlify/functions/waitlist',{
         method:'POST',
-        headers:{'accept':'application/json','content-type':'application/json','api-key':this.BREVO_API_KEY},
-        body:JSON.stringify({
-          email:wlEmail.trim(),
-          attributes:{NOME:wlName.trim(), MODELLO:wlModel, TAGLIA:wlSize},
-          listIds:[Number(this.BREVO_LIST_ID)],
-          updateEnabled:true
-        })
+        headers:{'content-type':'application/json'},
+        body:JSON.stringify({ nome:wlName.trim(), email:wlEmail.trim(), modello:wlModel, taglia:wlSize, consenso:true, origine:'sito' })
       });
-      if(!res.ok){
-        let code=''; try{ code=(await res.json()).code||''; }catch(x){}
-        if(res.status===401 || res.status===403 || code==='unauthorized') throw new Error('config');
-        if(res.status===400 && (code==='invalid_parameter' || code==='missing_parameter')) throw new Error('email');
-        throw new Error('server');
-      }
+      let body={}; try{ body=await res.json(); }catch(x){}
+      if(!res.ok || !body.ok) throw new Error(body.error||'server');
       this.setState({wlStatus:'ok', okSize:wlSize, okModel:wlModel});
     }catch(err){
       const m=String((err&&err.message)||'');
-      const msg = m==='config'
+      const msg = m==='not_configured' || m==='config'
         ? 'La lista non &egrave; ancora collegata. Scrivi a ciao@malammore.it con nome, modello e taglia: ti aggiungiamo a mano.'
-        : m==='email'
+        : m==='invalid_email'
         ? 'Questo indirizzo non &egrave; stato accettato. Controlla la mail carattere per carattere e premi di nuovo Avvisami.'
-        : m==='server'
+        : m==='server' || m==='network'
         ? 'Il servizio non risponde in questo momento. Riprova tra un minuto: quello che hai scritto resta qui.'
         : 'Connessione assente. Controlla la rete e premi di nuovo Avvisami: quello che hai scritto resta qui.';
       this.setState({wlStatus:'error', wlErr:msg.replace(/&egrave;/g,'\u00e8')});

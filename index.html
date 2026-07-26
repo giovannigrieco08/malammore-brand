@@ -36,10 +36,13 @@ a{color:#26211B;text-decoration:underline;text-underline-offset:3px}
 a:hover{color:#E07B3E}
 input::placeholder{color:rgba(38,33,27,.5);opacity:1}
 @media (prefers-reduced-motion:reduce){[data-reveal],[data-fade]{transition-duration:.2s!important;transform:none!important}}
+@media (max-width:768px){#malammoreRoot{width:100%!important;max-width:100%!important}}
+@media (max-width:768px){#malammoreGrain{width:100%!important;max-width:100%!important}}
+@media (max-width:768px){#malammoreSheet{width:100%!important;max-width:100%!important}}
 
 </style>
 </helmet>
-<div ref="{{ rootRef }}" style="width:390px;max-width:100vw;margin:0 auto;position:relative;background:#16110D">
+<div id="malammoreRoot" ref="{{ rootRef }}" style="width:390px;max-width:100vw;margin:0 auto;position:relative;background:#16110D">
 <div ref="{{ stageRef }}" style="position:relative;background-color:#EFE6D3;color:#26211B;transition:background-color .8s ease;min-height:100vh">
 
 <section id="intro" data-section data-bg="#EFE6D3" style="min-height:100vh;position:relative;display:flex;flex-direction:column;justify-content:center;gap:34px;padding:44px 26px 40px">
@@ -280,7 +283,7 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
 
 <sc-if value="{{ sheetOpen }}" hint-placeholder-val="">
   <div onClick="{{ closeSheet }}" style="position:fixed;inset:0;background:rgba(20,15,11,.55);z-index:100;animation:{{ scrimAnim }}"></div>
-  <div style="position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:min(390px,100vw);max-height:86vh;overflow-y:auto;background:#EFE6D3;border-radius:22px 22px 0 0;box-shadow:0 -18px 50px rgba(20,15,11,.4);z-index:101;animation:{{ sheetAnim }};padding:12px 22px 30px">
+  <div id="malammoreSheet" style="position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:min(390px,100vw);max-height:86vh;overflow-y:auto;background:#EFE6D3;border-radius:22px 22px 0 0;box-shadow:0 -18px 50px rgba(20,15,11,.4);z-index:101;animation:{{ sheetAnim }};padding:12px 22px 30px">
     <div style="position:sticky;top:0;background:#EFE6D3;padding-top:6px;margin:0 -22px 4px;padding-left:22px;padding-right:22px">
       <div style="width:44px;height:5px;border-radius:99px;background:rgba(38,33,27,.22);margin:0 auto 16px"></div>
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:16px;border-bottom:1px solid rgba(38,33,27,.14)">
@@ -310,7 +313,7 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
   </div>
 </sc-if>
 
-<div data-grain style="position:fixed;left:50%;transform:translateX(-50%);top:0;bottom:0;width:390px;max-width:100vw;pointer-events:none;z-index:60;mix-blend-mode:soft-light;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);background-size:150px 150px;animation:grainmove .5s steps(4) infinite"></div>
+<div id="malammoreGrain" data-grain style="position:fixed;left:50%;transform:translateX(-50%);top:0;bottom:0;width:390px;max-width:100vw;pointer-events:none;z-index:60;mix-blend-mode:soft-light;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);background-size:150px 150px;animation:grainmove .5s steps(4) infinite"></div>
 
 <div ref="{{ splashRef }}" style="position:absolute;top:0;left:0;width:100%;height:100vh;z-index:100;background:#2F5A93;color:#F7EFDD;display:flex;align-items:center;justify-content:center;padding:40px 30px;overflow:hidden">
   <div ref="{{ lockupRef }}" style="display:flex;flex-direction:column;align-items:center;width:100%;transform:scale(.965);will-change:transform">

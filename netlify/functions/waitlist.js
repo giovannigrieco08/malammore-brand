@@ -59,10 +59,11 @@ exports.handler = async (event) => {
     return json(500, { ok: false, error: "not_configured" });
   }
 
-  // Resend non ha campi custom sui contatti: incapsuliamo modello/taglia
-  // nel first_name cosi' restano visibili nella dashboard Audiences.
-  const tag = [modello, taglia].filter(Boolean).join(" · ");
-  const firstName = [nome, tag].filter(Boolean).join(" — ").slice(0, 120);
+  // MODELLO e TAGLIA sono Audience Properties custom create a mano su Resend
+  // (Audience > Properties): vanno passate cosi', non nel first_name.
+  const properties = {};
+  if (modello) properties.MODELLO = modello;
+  if (taglia) properties.TAGLIA = taglia;
 
   try {
     const contactRes = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
@@ -73,8 +74,9 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({
         email,
-        first_name: firstName || undefined,
+        first_name: nome || undefined,
         unsubscribed: false,
+        properties: Object.keys(properties).length ? properties : undefined,
       }),
     });
 

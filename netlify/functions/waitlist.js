@@ -91,7 +91,24 @@ exports.handler = async (event) => {
         if (status === 401 || status === 403) return json(500, { ok: false, error: "config" });
         return json(502, { ok: false, error: "server" });
       }
-      // gia' iscritto: procediamo comunque, non e' un errore per l'utente
+      // gia' iscritto: aggiorniamo comunque nome/proprieta' (nuovo modello/taglia scelti)
+      const updateRes = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts/${encodeURIComponent(email)}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          first_name: nome || undefined,
+          unsubscribed: false,
+          properties: Object.keys(properties).length ? properties : undefined,
+        }),
+      });
+      if (!updateRes.ok) {
+        const updBody = await updateRes.json().catch(() => ({}));
+        console.error("resend contact update error", updateRes.status, updBody);
+        // il contatto esiste comunque: non blocchiamo l'utente per un aggiornamento fallito
+      }
     }
   } catch (err) {
     console.error("resend contact fetch failed", err);

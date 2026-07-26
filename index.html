@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
+@font-face{font-family:'Switzer';src:url("uploads/Switzer-Variable.woff2") format("woff2-variations");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Switzer';src:url("uploads/Switzer-VariableItalic.woff2") format("woff2-variations");font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:'Ws Paradose';src:url("uploads/Ws Paradose.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Ws Paradose';src:url("uploads/Ws Paradose Italic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#16110D;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button{font:inherit;color:inherit;border:none;background:none;cursor:pointer}
+input,select{font:inherit;color:inherit}
+a{color:#E07B3E;text-decoration:none}
+a:hover{color:#C0492F}
+::selection{background:#E07B3E;color:#EFE6D3}
+[data-vp]::-webkit-scrollbar{width:0;height:0}
+@keyframes sunrise{from{transform:translateY(72%) scale(.84);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+@keyframes logoIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes hintFloat{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(7px);opacity:1}}
+@keyframes grainmove{0%{background-position:0 0}25%{background-position:-22px 9px}50%{background-position:13px -15px}75%{background-position:-9px 17px}100%{background-position:0 0}}
+@keyframes sheetUp{from{transform:translateY(101%)}to{transform:translateY(0)}}
+@keyframes sheetDown{from{transform:translateY(0)}to{transform:translateY(101%)}}
+@keyframes scrimIn{from{opacity:0}to{opacity:1}}
+@keyframes scrimOut{from{opacity:1}to{opacity:0}}
+a{color:#26211B;text-decoration:underline;text-underline-offset:3px}
+a:hover{color:#E07B3E}
+input::placeholder{color:rgba(38,33,27,.5);opacity:1}
+@media (prefers-reduced-motion:reduce){[data-reveal],[data-fade]{transition-duration:.2s!important;transform:none!important}}
+
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="width:390px;max-width:100vw;margin:0 auto;position:relative;background:#16110D">
+<div ref="{{ stageRef }}" style="position:relative;background-color:#EFE6D3;color:#26211B;transition:background-color .8s ease;min-height:100vh">
+
+<section id="intro" data-section data-bg="#EFE6D3" style="min-height:100vh;position:relative;display:flex;flex-direction:column;justify-content:center;gap:34px;padding:44px 26px 40px">
+  <div data-reveal style="position:absolute;top:20px;left:26px;right:26px;display:flex;align-items:baseline;justify-content:space-between;padding:0 0 10px;border-bottom:1px solid rgba(38,33,27,.22);font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.55);transition:opacity .9s ease,transform .9s ease">
+    <span>Capsule 001</span>
+    <span>Estate 2026</span>
+  </div>
+
+  <div style="padding:34px 0 30px;display:flex;flex-direction:column;align-items:center">
+    <div data-reveal data-hero-logo style="width:min(72%,244px);transition:opacity .9s ease,transform .9s ease">
+      <img src="uploads/malammore_logo-db0fdf7f.svg" alt="Malammore" style="display:block;width:100%;height:auto">
+    </div>
+    <p data-reveal style="margin:22px 0 0;text-align:center;font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:clamp(20px,6vw,24px);line-height:1.2;letter-spacing:-.01em;color:rgba(43,38,32,.78);transition:opacity .8s ease .1s,transform .8s ease .1s">&laquo;Non si racconta. Si porta.&raquo;</p>
+  </div>
+
+  <div data-reveal style="transition:opacity .8s ease .15s,transform .8s ease .15s">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding:0 0 14px">
+      <span>Le stampe</span><span>&euro;20</span>
+    </div>
+    <button onClick="{{ goRun }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .3s ease,color .3s ease" style-hover="padding-left:14px;color:#E07B3E">
+      <span style="width:9px;height:9px;border-radius:50%;background:#E07B3E;flex:none"></span>
+      <span style="flex:1;font-family:'Ws Paradose',serif;font-style:italic;font-size:26px;line-height:1">Run</span>
+      <span style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(38,33,27,.42)">01</span>
+    </button>
+    <button onClick="{{ goMiss }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .3s ease,color .3s ease" style-hover="padding-left:14px;color:#D9797C">
+      <span style="width:9px;height:9px;border-radius:50%;background:#E49A9A;flex:none"></span>
+      <span style="flex:1;font-family:'Ws Paradose',serif;font-style:italic;font-size:26px;line-height:1">Miss</span>
+      <span style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(38,33,27,.42)">02</span>
+    </button>
+    <button onClick="{{ goRebel }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);border-bottom:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .3s ease,color .3s ease" style-hover="padding-left:14px;color:#2F5A93">
+      <span style="width:9px;height:9px;border-radius:50%;background:#2F5A93;flex:none"></span>
+      <span style="flex:1;font-family:'Ws Paradose',serif;font-style:italic;font-size:26px;line-height:1">Rebel</span>
+      <span style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(38,33,27,.42)">03</span>
+    </button>
+  </div>
+</section>
+
+<section id="run" data-section data-bg="#EEDCC2" data-shirt-section style="height:320vh;position:relative">
+  <div style="position:sticky;top:0;height:100vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:2px;padding:46px 26px 24px">
+    <div style="text-align:center">
+      <div data-fade data-fs="0.03" data-fe="0.13" style="font-family:'Switzer',sans-serif;font-weight:600;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(192,73,47,.85)">01 &middot; Libert&agrave;</div>
+      <h2 data-fade data-fs="0.1" data-fe="0.22" style="margin:10px 0 0;font-family:'Ws Paradose',serif;font-weight:400;font-style:italic;font-size:38px;line-height:1;letter-spacing:-.02em;color:#E07B3E">Run, guagli&ograve;, run</h2>
+    </div>
+    <div style="flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;perspective:1500px">
+      <div style="position:absolute;bottom:30px;width:206px;height:26px;border-radius:50%;background:rgba(38,33,27,.16);filter:blur(13px)"></div>
+      <div style="width:316px;max-width:84vw;height:min(368px,37vh);position:relative">
+        <img data-frame-base src="uploads/run_frames_web_offwhite/run_001.webp" alt="Maglia Run" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain" />
+        <canvas data-frame-canvas data-frames="run" width="720" height="838" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .35s ease"></canvas>
+      </div>
+      <div style="position:absolute;bottom:0;left:0;right:0;text-align:center">
+        <div style="width:172px;height:2px;margin:8px auto 0;background:rgba(38,33,27,.14);overflow:hidden"><div data-prog style="height:100%;background:#E07B3E;transform-origin:left;transform:scaleX(0)"></div></div>
+      </div>
+    </div>
+    <div>
+      <p data-fade data-fs="0.24" data-fe="0.38" style="margin:12px 0 14px;font-family:'Instrument Serif',serif;font-weight:400;font-style:italic;font-size:22px;line-height:1.15;color:#3A342C;text-align:center">&laquo;Correre, non scappare.&raquo;</p>
+      <div data-fade data-fs="0.42" data-fe="0.56" style="display:flex;align-items:center;justify-content:space-between;gap:14px">
+        <div>
+          <div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:40px;line-height:46px;color:#26211B">&euro;&#8202;20</div>
+        </div>
+        <button onClick="{{ openRun }}" aria-label="Sfoglia le foto" style="width:46px;height:46px;border-radius:50%;border:1.5px solid #E07B3E;color:#E07B3E;font-size:24px;font-weight:300;line-height:1;display:flex;align-items:center;justify-content:center;flex:none">+</button>
+      </div>
+      <div data-fade data-fs="0.56" data-fe="0.7" style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(38,33,27,.16);display:flex;flex-direction:column;align-items:center;gap:7px">
+        <div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:22px;line-height:1.1;color:#26211B;text-align:center">Al bar del Malammore</div>
+        <div style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.45)">Fino a esaurimento scorte</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="miss" data-section data-bg="#EFDDD4" data-shirt-section style="height:320vh;position:relative">
+  <div style="position:sticky;top:0;height:100vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:2px;padding:46px 26px 24px">
+    <div style="text-align:center">
+      <div data-fade data-fs="0.03" data-fe="0.13" style="font-family:'Switzer',sans-serif;font-weight:600;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(198,110,110,.85)">02 &middot; Nostalgia</div>
+      <h2 data-fade data-fs="0.1" data-fe="0.22" style="margin:10px 0 0;font-family:'Ws Paradose',serif;font-weight:400;font-style:italic;font-size:38px;line-height:1;letter-spacing:-.02em;color:#E49A9A">Miss you, but sciall&agrave;</h2>
+    </div>
+    <div style="flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;perspective:1500px">
+      <div style="position:absolute;bottom:30px;width:206px;height:26px;border-radius:50%;background:rgba(38,33,27,.16);filter:blur(13px)"></div>
+      <div style="width:316px;max-width:84vw;height:min(368px,37vh);position:relative">
+        <img data-frame-base src="uploads/miss_frames_web_offwhite/miss_001.webp" alt="Maglia Miss you, but sciall&agrave;" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain" />
+        <canvas data-frame-canvas data-frames="miss" width="720" height="838" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .35s ease"></canvas>
+      </div>
+      <div style="position:absolute;bottom:0;left:0;right:0;text-align:center">
+        <div style="width:172px;height:2px;margin:8px auto 0;background:rgba(38,33,27,.14);overflow:hidden"><div data-prog style="height:100%;background:#E49A9A;transform-origin:left;transform:scaleX(0)"></div></div>
+      </div>
+    </div>
+    <div>
+      <p data-fade data-fs="0.24" data-fe="0.38" style="margin:12px 0 14px;font-family:'Instrument Serif',serif;font-weight:400;font-style:italic;font-size:22px;line-height:1.15;color:#3A342C;text-align:center">&laquo;La malinconia col sorriso storto.&raquo;</p>
+      <div data-fade data-fs="0.42" data-fe="0.56" style="display:flex;align-items:center;justify-content:space-between;gap:14px">
+        <div>
+          <div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:40px;line-height:46px;color:#26211B">&euro;&#8202;20</div>
+        </div>
+        <button onClick="{{ openMiss }}" aria-label="Sfoglia le foto" style="width:46px;height:46px;border-radius:50%;border:1.5px solid #E49A9A;color:#CE7B7B;font-size:24px;font-weight:300;line-height:1;display:flex;align-items:center;justify-content:center;flex:none">+</button>
+      </div>
+      <div data-fade data-fs="0.56" data-fe="0.7" style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(38,33,27,.16);display:flex;flex-direction:column;align-items:center;gap:7px">
+        <div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:22px;line-height:1.1;color:#26211B;text-align:center">Al bar del Malammore</div>
+        <div style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.45)">Fino a esaurimento scorte</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rebel" data-section data-bg="#E3DFCC" data-shirt-section style="height:320vh;position:relative">
+  <div style="position:sticky;top:0;height:100vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:2px;padding:46px 26px 24px">
+    <div style="text-align:center">
+      <div data-fade data-fs="0.03" data-fe="0.13" style="font-family:'Switzer',sans-serif;font-weight:600;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(47,90,147,.85)">03 &middot; Ribellione</div>
+      <h2 data-fade data-fs="0.1" data-fe="0.22" style="margin:10px 0 0;font-family:'Ws Paradose',serif;font-weight:400;font-style:italic;font-size:38px;line-height:1;letter-spacing:-.02em;color:#2F5A93">Rebel like &lsquo;o mare</h2>
+    </div>
+    <div style="flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;perspective:1500px">
+      <div style="position:absolute;bottom:30px;width:206px;height:26px;border-radius:50%;background:rgba(38,33,27,.16);filter:blur(13px)"></div>
+      <div style="width:316px;max-width:84vw;height:min(368px,37vh);position:relative">
+        <img data-frame-base src="uploads/rebel_frames_web/rebel_001.webp" alt="Maglia Rebel like &#39;o mare" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain" />
+        <canvas data-frame-canvas data-frames="rebel" width="720" height="838" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .35s ease"></canvas>
+      </div>
+      <div style="position:absolute;bottom:0;left:0;right:0;text-align:center">
+        <div style="width:172px;height:2px;margin:8px auto 0;background:rgba(38,33,27,.14);overflow:hidden"><div data-prog style="height:100%;background:#2F5A93;transform-origin:left;transform:scaleX(0)"></div></div>
+      </div>
+    </div>
+    <div>
+      <p data-fade data-fs="0.24" data-fe="0.38" style="margin:12px 0 14px;font-family:'Instrument Serif',serif;font-weight:400;font-style:italic;font-size:22px;line-height:1.15;color:#3A342C;text-align:center">&laquo;Indomabili come il mare.&raquo;</p>
+      <div data-fade data-fs="0.42" data-fe="0.56" style="display:flex;align-items:center;justify-content:space-between;gap:14px">
+        <div>
+          <div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:40px;line-height:46px;color:#26211B">&euro;&#8202;20</div>
+        </div>
+        <button onClick="{{ openRebel }}" aria-label="Sfoglia le foto" style="width:46px;height:46px;border-radius:50%;border:1.5px solid #2F5A93;color:#2F5A93;font-size:24px;font-weight:300;line-height:1;display:flex;align-items:center;justify-content:center;flex:none">+</button>
+      </div>
+      <div data-fade data-fs="0.56" data-fe="0.7" style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(38,33,27,.16);display:flex;flex-direction:column;align-items:center;gap:7px">
+        <div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:22px;line-height:1.1;color:#26211B;text-align:center">Al bar del Malammore</div>
+        <div style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.45)">Fino a esaurimento scorte</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="bar" data-section data-bg="#EFE6D3" style="min-height:100vh;padding:80px 26px 40px;display:flex;flex-direction:column;justify-content:center">
+  <h2 data-reveal style="margin:0;font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:38px;line-height:1.02;letter-spacing:-.02em;color:#26211B;transition:opacity .85s ease,transform .85s ease">Si compra al bar</h2>
+  <p data-reveal style="margin:16px 0 30px;font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C;text-wrap:pretty;transition:opacity .8s ease .05s,transform .8s ease .05s">Niente prenotazioni, niente pagamenti online. Chiedi in cassa la stampa e la taglia che vuoi: se c&#39;&egrave;, te la porti via subito.</p>
+
+  <div style="display:flex;flex-direction:column;border-top:1px solid rgba(38,33,27,.18)">
+    <div data-reveal style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14);transition:opacity .7s ease 0s,transform .7s ease 0s"><div style="flex:none;width:96px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding-top:4px">Prezzo</div><div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#2B2620">&euro;20</div></div>
+    <div data-reveal style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14);transition:opacity .7s ease .04s,transform .7s ease .04s"><div style="flex:none;width:96px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding-top:4px">Stampe</div><div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#2B2620">Run, Miss, Rebel.</div></div>
+    <div data-reveal style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14);transition:opacity .7s ease .08s,transform .7s ease .08s"><div style="flex:none;width:96px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding-top:4px">Taglie</div><div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#2B2620">Dalla S alla XL, fino a esaurimento.</div></div>
+    <div data-reveal style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14);transition:opacity .7s ease .12s,transform .7s ease .12s"><div style="flex:none;width:96px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding-top:4px">Pagamento</div><div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#2B2620">Direttamente in cassa.</div></div>
+  </div>
+
+</section>
+
+<section id="lista" data-section data-bg="#EFE6D3" style="min-height:100vh;padding:80px 26px 40px;display:flex;flex-direction:column;justify-content:center">
+  <h2 data-reveal style="margin:0;font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:38px;line-height:1.02;letter-spacing:-.02em;color:#26211B;transition:opacity .85s ease,transform .85s ease">Ti avvisiamo quando torna.</h2>
+  <p data-reveal style="margin:16px 0 30px;font-family:'Switzer',sans-serif;font-weight:400;font-size:17px;line-height:1.45;color:#3A342C;text-wrap:pretty;transition:opacity .8s ease .05s,transform .8s ease .05s">Lasciaci la mail e il modello che cerchi. Ti scriviamo appena rientra, prima che lo sappiano gli altri.</p>
+
+  <sc-if value="{{ wlOk }}" hint-placeholder-val="">
+    <div style="border:1.5px solid #26211B;border-radius:16px;padding:32px 24px;text-align:center;background:rgba(255,255,255,.3)">
+      <div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:38px;line-height:1;color:#26211B">Ci sei.</div>
+      <div style="margin-top:12px;font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">Ti scriviamo appena torna la {{ okSize }} di {{ okModel }}.</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ wlFormOpen }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div>
+        <label for="wl-nome" style="display:block;margin-bottom:9px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5)">Nome</label>
+        <input id="wl-nome" value="{{ wlName }}" onInput="{{ setWlName }}" onChange="{{ setWlName }}" placeholder="Come ti chiami" style="width:100%;box-sizing:border-box;min-height:52px;padding:15px 16px;border-radius:12px;border:1px solid rgba(38,33,27,.26);background:rgba(255,255,255,.44);font-family:'Switzer',sans-serif;font-weight:500;font-size:16px;line-height:1.25;letter-spacing:.01em;appearance:none;-webkit-appearance:none;color:#26211B">
+        <sc-if value="{{ errName }}" hint-placeholder-val=""><div style="margin-top:8px;font-family:'Switzer',sans-serif;font-style:italic;font-size:15px;line-height:1.35;color:#C0492F">{{ errName }}</div></sc-if>
+      </div>
+
+      <div>
+        <label for="wl-email" style="display:block;margin-bottom:9px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5)">Email</label>
+        <input id="wl-email" type="email" inputMode="email" autoComplete="email" value="{{ wlEmail }}" onInput="{{ setWlEmail }}" onChange="{{ setWlEmail }}" placeholder="nome@email.it" style="width:100%;box-sizing:border-box;min-height:52px;padding:15px 16px;border-radius:12px;border:1px solid rgba(38,33,27,.26);background:rgba(255,255,255,.44);font-family:'Switzer',sans-serif;font-weight:500;font-size:16px;line-height:1.25;letter-spacing:.01em;appearance:none;-webkit-appearance:none;color:#26211B">
+        <sc-if value="{{ errEmail }}" hint-placeholder-val=""><div style="margin-top:8px;font-family:'Switzer',sans-serif;font-style:italic;font-size:15px;line-height:1.35;color:#C0492F">{{ errEmail }}</div></sc-if>
+      </div>
+
+      <div>
+        <label for="wl-modello" style="display:block;margin-bottom:9px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5)">Modello</label>
+        <select id="wl-modello" value="{{ wlModel }}" onChange="{{ setWlModel }}" style="width:100%;box-sizing:border-box;min-height:52px;padding:14px 16px;border-radius:12px;border:1px solid rgba(38,33,27,.26);background:rgba(255,255,255,.44);font-family:'Switzer',sans-serif;font-weight:500;font-size:16px;line-height:1.25;letter-spacing:.01em;color:{{ modelColor }}">
+          <option value="">Quale cerchi&hellip;</option>
+          <option value="Run, guagli&ograve;, run">Run, guagli&ograve;, run</option>
+          <option value="Miss you, but sciall&agrave;">Miss you, but sciall&agrave;</option>
+          <option value="Rebel like &#39;o mare">Rebel like &#39;o mare</option>
+        </select>
+        <sc-if value="{{ errModel }}" hint-placeholder-val=""><div style="margin-top:8px;font-family:'Switzer',sans-serif;font-style:italic;font-size:15px;line-height:1.35;color:#C0492F">{{ errModel }}</div></sc-if>
+      </div>
+
+      <div>
+        <label for="wl-taglia" style="display:block;margin-bottom:9px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5)">Taglia</label>
+        <select id="wl-taglia" value="{{ wlSize }}" onChange="{{ setWlSize }}" style="width:100%;box-sizing:border-box;min-height:52px;padding:14px 16px;border-radius:12px;border:1px solid rgba(38,33,27,.26);background:rgba(255,255,255,.44);font-family:'Switzer',sans-serif;font-weight:500;font-size:16px;line-height:1.25;letter-spacing:.01em;color:{{ sizeColor }}">
+          <option value="">Che taglia porti&hellip;</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+        </select>
+        <sc-if value="{{ errSize }}" hint-placeholder-val=""><div style="margin-top:8px;font-family:'Switzer',sans-serif;font-style:italic;font-size:15px;line-height:1.35;color:#C0492F">{{ errSize }}</div></sc-if>
+      </div>
+
+      <div>
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <input id="wl-consenso" type="checkbox" checked="{{ wlConsent }}" onChange="{{ toggleConsent }}" style="width:20px;height:20px;margin:1px 0 0;flex:none;appearance:none;-webkit-appearance:none;border:1px solid rgba(38,33,27,.42);border-radius:5px;background:{{ consentBg }};cursor:pointer;display:grid;place-content:center;transition:background .18s ease,border-color .18s ease" style-before="content:'';width:11px;height:11px;background:{{ consentTick }};clip-path:polygon(14% 44%,0 65%,50% 100%,100% 16%,80% 0%,43% 62%)">
+          <div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">
+            <label for="wl-consenso">Accetto di essere ricontattato via email per questa richiesta.</label>
+            <button onClick="{{ togglePrivacy }}" style="font:inherit;color:#26211B;text-decoration:underline;text-underline-offset:3px;margin-left:6px">Privacy</button>
+          </div>
+        </div>
+        <sc-if value="{{ errConsent }}" hint-placeholder-val=""><div style="margin-top:8px;font-family:'Switzer',sans-serif;font-style:italic;font-size:15px;line-height:1.35;color:#C0492F">{{ errConsent }}</div></sc-if>
+        <sc-if value="{{ privacyOpen }}" hint-placeholder-val="">
+          <div style="margin-top:14px;padding:16px 18px;border:1px solid rgba(38,33,27,.2);border-radius:12px;background:rgba(255,255,255,.32);display:flex;flex-direction:column;gap:8px">
+            <div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">Conserviamo nome, email, modello e taglia solo per avvisarti quando la maglia rientra. Nessuna newsletter, nessuna cessione a terzi.</div>
+            <div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">Per cancellarti rispondi all&#39;email che ricevi o scrivi a <a href="mailto:ciao@malammore.it">ciao@malammore.it</a>: eliminiamo tutto entro 48 ore.</div>
+          </div>
+        </sc-if>
+      </div>
+
+      <sc-if value="{{ wlErr }}" hint-placeholder-val="">
+        <div style="padding:15px 17px;border:1px solid rgba(192,73,47,.42);border-radius:12px;background:rgba(192,73,47,.07);font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#8E3722">{{ wlErr }}</div>
+      </sc-if>
+
+      <sc-if value="{{ wlSending }}" hint-placeholder-val="">
+        <button disabled="disabled" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.45;cursor:default">Invio&hellip;</button>
+      </sc-if>
+      <sc-if value="{{ wlIdle }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ submitWl }}" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:transform .18s ease,box-shadow .18s ease" style-hover="transform:translateY(-2px);box-shadow:0 10px 22px rgba(38,33,27,.28)" style-active="transform:translateY(0)">Avvisami</button>
+      </sc-if>
+    </div>
+  </sc-if>
+</section>
+
+<section id="crediti" data-section data-bg="#EFE6D3" style="padding:0 26px 26px;display:flex;flex-direction:column;justify-content:center">
+  <h2 data-reveal style="margin:0 0 30px;font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:38px;line-height:1.02;letter-spacing:-.02em;color:#26211B;transition:opacity .85s ease,transform .85s ease">Crediti</h2>
+
+  <div style="display:flex;flex-direction:column;border-top:1px solid rgba(38,33,27,.18)">
+    <div data-reveal style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14);transition:opacity .7s ease 0s,transform .7s ease 0s"><div style="flex:none;width:96px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding-top:4px">Ideazione</div><div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#2B2620"><a href="https://instagram.com/giovanni.griecotroiano" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:rgba(38,33,27,.35);transition:text-decoration-color .25s ease" style-hover="text-decoration-color:#26211B">Giovanni Grieco Troiano</a><br />Giuseppe Troiano</div></div>
+    <div data-reveal style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14);transition:opacity .7s ease .04s,transform .7s ease .04s"><div style="flex:none;width:96px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding-top:4px">Sito</div><div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#2B2620"><a href="https://instagram.com/giovanni.griecotroiano" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:rgba(38,33,27,.35);transition:text-decoration-color .25s ease" style-hover="text-decoration-color:#26211B">Giovanni Grieco Troiano</a></div></div>
+  </div>
+
+  <div data-reveal style="margin-top:22px;text-align:center;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.45);transition:opacity .8s ease,transform .8s ease">Malammore Beach Club &middot; Manfredonia &middot; Estate 2026</div>
+</section>
+
+</div>
+
+<sc-if value="{{ sheetOpen }}" hint-placeholder-val="">
+  <div onClick="{{ closeSheet }}" style="position:fixed;inset:0;background:rgba(20,15,11,.55);z-index:100;animation:{{ scrimAnim }}"></div>
+  <div style="position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:min(390px,100vw);max-height:86vh;overflow-y:auto;background:#EFE6D3;border-radius:22px 22px 0 0;box-shadow:0 -18px 50px rgba(20,15,11,.4);z-index:101;animation:{{ sheetAnim }};padding:12px 22px 30px">
+    <div style="position:sticky;top:0;background:#EFE6D3;padding-top:6px;margin:0 -22px 4px;padding-left:22px;padding-right:22px">
+      <div style="width:44px;height:5px;border-radius:99px;background:rgba(38,33,27,.22);margin:0 auto 16px"></div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:16px;border-bottom:1px solid rgba(38,33,27,.14)">
+        <div>
+          <div style="font-family:'Switzer',sans-serif;font-weight:600;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:{{ sheet.color }}">{{ sheet.eyebrow }}</div>
+          <div style="margin-top:6px;font-family:'Ws Paradose',serif;font-weight:400;font-style:italic;font-size:26px;line-height:1;color:{{ sheet.color }}">{{ sheet.title }}</div>
+        </div>
+        <button onClick="{{ closeSheet }}" aria-label="Chiudi" style="flex:none;width:44px;height:44px;border-radius:50%;border:1px solid rgba(38,33,27,.25);color:#26211B;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center">&times;</button>
+      </div>
+    </div>
+
+    <div style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);margin:22px 0 6px">Dati prodotto</div>
+    <div>
+      <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(38,33,27,.12);font-family:'Switzer',sans-serif;font-size:17px;color:#2B2620"><span style="color:rgba(38,33,27,.55)">Vestibilit&agrave;</span><span style="text-align:right">Oversize unisex</span></div>
+      <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(38,33,27,.12);font-family:'Switzer',sans-serif;font-size:17px;color:#2B2620"><span style="color:rgba(38,33,27,.55)">Colore</span><span style="text-align:right">Off&#8209;white / panna</span></div>
+      <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(38,33,27,.12);font-family:'Switzer',sans-serif;font-size:17px;color:#2B2620"><span style="color:rgba(38,33,27,.55)">Tessuto</span><span style="text-align:right">Cotone bio GOTS &middot; 210 g/m&sup2;</span></div>
+      <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(38,33,27,.12);font-family:'Switzer',sans-serif;font-size:17px;color:#2B2620"><span style="color:rgba(38,33,27,.55)">Blank</span><span style="text-align:right">PAYPER COOL</span></div>
+      <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(38,33,27,.12);font-family:'Switzer',sans-serif;font-size:17px;color:#2B2620"><span style="color:rgba(38,33,27,.55)">Taglie</span><span style="text-align:right">S &ndash; XL</span></div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:22px">
+      <div>
+        <div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:26px;line-height:1.1;color:#26211B">&euro;&#8202;20</div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(38,33,27,.14);display:flex;flex-direction:column;align-items:center;gap:7px"><div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:22px;line-height:1.1;color:#26211B;text-align:center">Al bar del Malammore</div><div style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.45)">Fino a esaurimento scorte</div></div>
+  </div>
+</sc-if>
+
+<div data-grain style="position:fixed;left:50%;transform:translateX(-50%);top:0;bottom:0;width:390px;max-width:100vw;pointer-events:none;z-index:60;mix-blend-mode:soft-light;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);background-size:150px 150px;animation:grainmove .5s steps(4) infinite"></div>
+
+<div ref="{{ splashRef }}" style="position:absolute;top:0;left:0;width:100%;height:100vh;z-index:100;background:#2F5A93;color:#F7EFDD;display:flex;align-items:center;justify-content:center;padding:40px 30px;overflow:hidden">
+  <div ref="{{ lockupRef }}" style="display:flex;flex-direction:column;align-items:center;width:100%;transform:scale(.965);will-change:transform">
+    <div ref="{{ logoRef }}" style="position:relative;width:min(76vw,286px);aspect-ratio:2972/1338;opacity:0">
+      <img src="uploads/malammore_logo-db0fdf7f.svg" alt="Malammore" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain">
+      <img ref="{{ logoInkRef }}" src="uploads/malammore_logo-db0fdf7f.svg" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:brightness(0) invert(1)">
+    </div>
+    <div ref="{{ metaRef }}" style="display:flex;align-items:center;gap:16px;width:min(76vw,286px);margin-top:26px;opacity:0;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase">
+      <span>Est.</span>
+      <span ref="{{ ruleRef }}" style="flex:1;height:1px;background:currentColor;opacity:.42;transform:scaleX(0)"></span>
+      <span>2026</span>
+    </div>
+    <div ref="{{ dotsRef }}" style="display:flex;gap:10px;margin-top:30px">
+      <span data-dot style="width:7px;height:7px;border-radius:50%;background:#E07B3E;opacity:0"></span>
+      <span data-dot style="width:7px;height:7px;border-radius:50%;background:#E49A9A;opacity:0"></span>
+      <span data-dot style="width:7px;height:7px;border-radius:50%;background:#2F5A93;opacity:0"></span>
+    </div>
+  </div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;grain&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.12,&quot;min&quot;:0,&quot;max&quot;:0.3,&quot;step&quot;:0.01,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;&quot;,&quot;section&quot;:&quot;Atmosfera&quot;},&quot;spins&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1,&quot;min&quot;:1,&quot;max&quot;:3,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Maglia 360°&quot;},&quot;shirtFrames&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:72,&quot;min&quot;:24,&quot;max&quot;:120,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Maglia 360°&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  stageRef = React.createRef();
+  splashRef = React.createRef();
+  lockupRef = React.createRef();
+  archRef = React.createRef();
+  logoRef = React.createRef();
+  logoInkRef = React.createRef();
+  metaRef = React.createRef();
+  ruleRef = React.createRef();
+  dotsRef = React.createRef();
+  SPD = 3.5;
+  /* ===================== DA SOSTITUIRE ===================== */
+  /* Chiave API Brevo (v3) — Brevo > SMTP & API > API Keys      */
+  BREVO_API_KEY = 'xkeysib-SOSTITUIRE-CON-LA-TUA-CHIAVE';
+  /* ID numerico della lista "Lista d'attesa" in Brevo          */
+  BREVO_LIST_ID = 0;
+  /* ========================================================== */
+
+  state = { sheet:null, sheetClosing:false, wlName:'', wlEmail:'', wlModel:'', wlSize:'', wlConsent:false,
+            wlStatus:'idle', wlErr:'', wlErrs:{}, privacyOpen:false, okSize:'', okModel:'' };
+
+  wlValidate(){
+    const s=this.state, e={};
+    if(!s.wlName.trim()) e.name='Scrivi il tuo nome: serve per riconoscerti al bar.';
+    const mail=s.wlEmail.trim();
+    if(!mail) e.email='Senza email non possiamo avvisarti.';
+    else if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(mail)) e.email='Formato non valido: serve qualcosa come nome@email.it';
+    if(!s.wlModel) e.model='Scegli quale delle tre stai cercando.';
+    if(!s.wlSize) e.size='Scegli la taglia che ti serve.';
+    if(!s.wlConsent) e.consent='Spunta il consenso: senza non possiamo scriverti.';
+    return e;
+  }
+
+  clearErr(k){ const w={...this.state.wlErrs}; delete w[k]; this.setState({wlErrs:w}); }
+
+  async submitWl(){
+    const errs=this.wlValidate();
+    if(Object.keys(errs).length){ this.setState({wlErrs:errs, wlErr:''}); return; }
+    this.setState({wlErrs:{}, wlErr:'', wlStatus:'sending'});
+    const {wlName,wlEmail,wlModel,wlSize}=this.state;
+    try{
+      if(!this.BREVO_API_KEY || this.BREVO_API_KEY.indexOf('SOSTITUIRE')>=0 || !Number(this.BREVO_LIST_ID)) throw new Error('config');
+      const res=await fetch('https://api.brevo.com/v3/contacts',{
+        method:'POST',
+        headers:{'accept':'application/json','content-type':'application/json','api-key':this.BREVO_API_KEY},
+        body:JSON.stringify({
+          email:wlEmail.trim(),
+          attributes:{NOME:wlName.trim(), MODELLO:wlModel, TAGLIA:wlSize},
+          listIds:[Number(this.BREVO_LIST_ID)],
+          updateEnabled:true
+        })
+      });
+      if(!res.ok){
+        let code=''; try{ code=(await res.json()).code||''; }catch(x){}
+        if(res.status===401 || res.status===403 || code==='unauthorized') throw new Error('config');
+        if(res.status===400 && (code==='invalid_parameter' || code==='missing_parameter')) throw new Error('email');
+        throw new Error('server');
+      }
+      this.setState({wlStatus:'ok', okSize:wlSize, okModel:wlModel});
+    }catch(err){
+      const m=String((err&&err.message)||'');
+      const msg = m==='config'
+        ? 'La lista non &egrave; ancora collegata. Scrivi a ciao@malammore.it con nome, modello e taglia: ti aggiungiamo a mano.'
+        : m==='email'
+        ? 'Questo indirizzo non &egrave; stato accettato. Controlla la mail carattere per carattere e premi di nuovo Avvisami.'
+        : m==='server'
+        ? 'Il servizio non risponde in questo momento. Riprova tra un minuto: quello che hai scritto resta qui.'
+        : 'Connessione assente. Controlla la rete e premi di nuovo Avvisami: quello che hai scritto resta qui.';
+      this.setState({wlStatus:'error', wlErr:msg.replace(/&egrave;/g,'\u00e8')});
+    }
+  }
+
+  C = { cream:'#EFE6D3', ink:'#26211B', run:'#E07B3E', miss:'#E49A9A', rebel:'#2F5A93' };
+  SHIRTS = {
+    run:{ id:'run', color:'#E07B3E', eyebrow:'01 · Libertà', title:'Run, guagliò, run' },
+    miss:{ id:'miss', color:'#CE7B7B', eyebrow:'02 · Nostalgia', title:'Miss you, but sciallà' },
+    rebel:{ id:'rebel', color:'#2F5A93', eyebrow:'03 · Ribellione', title:"Rebel like 'o mare" },
+  };
+
+  smooth(p,a,b){ if(a===b) return p<a?0:1; let t=(p-a)/(b-a); if(t<0)t=0; if(t>1)t=1; return t*t*(3-2*t); }
+
+  componentDidMount(){
+    const root=this.rootRef.current;
+    if(!root) return;
+    this.startSplash();
+    const g=root.querySelector('[data-grain]'); if(g) g.style.opacity=String(this.props.grain ?? 0.12);
+    this.spins=this.props.spins ?? 1;
+    this.frames=this.props.shirtFrames ?? 72;
+    this.sections=[...root.querySelectorAll('[data-section]')].map(el=>({el, bg:el.getAttribute('data-bg')||this.C.cream}));
+    this.shirts=[...root.querySelectorAll('[data-shirt-section]')].map(el=>{
+      const fades=[...el.querySelectorAll('[data-fade]')].map(f=>({el:f, s:parseFloat(f.getAttribute('data-fs')||'0'), e:parseFloat(f.getAttribute('data-fe')||'1')}));
+      const canvas=el.querySelector('[data-frame-canvas]');
+      const urls=canvas ? this.frameList(canvas.getAttribute('data-frames')||'run') : null;
+      const count=urls ? urls.length : this.frames;
+      el.querySelectorAll('[data-frame-total]').forEach(t=>t.textContent=String(count));
+      const sh={ el, shirtEl:el.querySelector('[data-shirt]'), canvas, ctx:canvas?canvas.getContext('2d'):null, bitmaps:null, baseImg:el.querySelector('[data-frame-base]'), lastIdx:null, count, progEl:el.querySelector('[data-prog]'), frameEl:el.querySelector('[data-frame]'), fades };
+      sh.dragTurn=0;
+      if(canvas) this.preloadFrames(sh, urls);
+      this.initDrag(sh);
+      return sh;
+    });
+    this.shirts.forEach(sh=>sh.fades.forEach(f=>{ f.el.style.opacity='0'; f.el.style.transform='translateY(22px)'; }));
+    this.io=new IntersectionObserver((ents)=>{ ents.forEach(en=>{ if(en.isIntersecting){ en.target.style.opacity='1'; en.target.style.transform='none'; this.io.unobserve(en.target);} }); },{threshold:0.16});
+    const introSec=root.querySelector('#intro');
+    this._introReveal=[];
+    [...root.querySelectorAll('[data-reveal]')].forEach(el=>{
+      el.style.opacity='0'; el.style.transform='translateY(24px)';
+      if(introSec && introSec.contains(el)){ if(!el.hasAttribute('data-hero-logo')) this._introReveal.push(el); }
+      else this.io.observe(el);
+    });
+    this.onScroll=()=>{ if(this._raf) return; this._raf=requestAnimationFrame(()=>{ this._raf=0; this.applyScroll(); }); };
+    window.addEventListener('scroll', this.onScroll, {passive:true});
+    window.addEventListener('resize', this.onScroll, {passive:true});
+    this.applyScroll();
+  }
+  componentWillUnmount(){ if(this.onScroll){ window.removeEventListener('scroll', this.onScroll); window.removeEventListener('resize', this.onScroll); } if(this.io) this.io.disconnect(); }
+  componentDidUpdate(){ this.applyScroll(); }
+
+  applyScroll(){
+    if(!this.sections) return;
+    const vh=window.innerHeight;
+    let bg=this.C.cream; const mid=vh/2;
+    for(const s of this.sections){ const r=s.el.getBoundingClientRect(); if(r.top<=mid && r.bottom>=mid){ bg=s.bg; break; } }
+    if(this.stageRef.current) this.stageRef.current.style.backgroundColor=bg;
+    for(const sh of this.shirts){ const r=sh.el.getBoundingClientRect(); const denom=Math.max(sh.el.offsetHeight-vh,1); let p=(-r.top)/denom; if(p<0)p=0; if(p>1)p=1;
+      const turn=p*this.spins+(sh.dragTurn||0);
+      if(sh.bitmaps){
+        const n=sh.bitmaps.length;
+        let i=Math.round(turn*(n-1))%n; if(i<0)i+=n;
+        if(sh.lastIdx!==i) this.drawFrame(sh, i);
+      } else if(sh.shirtEl) sh.shirtEl.style.transform=`rotateY(${(turn*360).toFixed(2)}deg)`;
+      if(sh.progEl) sh.progEl.style.transform=`scaleX(${p.toFixed(3)})`;
+      if(sh.frameEl){ const f=Math.min(sh.count, Math.floor(p*sh.count)+1); sh.frameEl.textContent=String(f).padStart(3,'0'); }
+      for(const fd of sh.fades){ const a=this.smooth(p, fd.s, fd.e); fd.el.style.opacity=a.toFixed(3); fd.el.style.transform=`translateY(${((1-a)*22).toFixed(1)}px)`; }
+    }
+  }
+
+  scrollToId(id){ const root=this.rootRef.current; if(!root) return; const el=root.querySelector('#'+id); if(!el) return; const top=el.getBoundingClientRect().top + window.pageYOffset; window.scrollTo({top, behavior:'smooth'}); }
+  startSplash(){
+    this._splashT0=performance.now();
+    this._loadPct=0;
+    try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+    window.scrollTo(0,0);
+    document.body.style.overflow='hidden';
+    const sp=this.splashRef.current;
+    this._dots=sp?Array.prototype.slice.call(sp.querySelectorAll('[data-dot]')):[];
+    this.spFrame(0);
+    this._spLoop=()=>{
+      const t=(performance.now()-this._splashT0)/1000;
+      if(t>=this.SPD){ this.spFrame(this.SPD); this._spDone=true; this.maybeEnd(); return; }
+      this.spFrame(t);
+      this._spRaf=requestAnimationFrame(this._spLoop);
+    };
+    this._spRaf=requestAnimationFrame(this._spLoop);
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>this.spFrame(this._spT||0));
+    this._splashCap=setTimeout(()=>this.endSplash(), 7200);
+  }
+
+  lerpHex(a,b,t){
+    const p=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+    const A=p(a),B=p(b);
+    return 'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')+')';
+  }
+
+  spFrame(t){
+    this._spT=t;
+    const sp=this.splashRef.current; if(!sp) return;
+    const cl=x=>Math.max(0,Math.min(1,x));
+    const seg=(a,b)=>cl((t-a)/(b-a));
+    const eo=x=>1-Math.pow(1-x,3);
+    const eq=x=>1-Math.pow(1-x,4);
+    const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+
+    const logoP=eq(seg(.12,1.2)), metaP=eo(seg(.9,1.75));
+    const ruleP=eio(seg(.95,1.95));
+    // mare al tramonto, i tre colori della capsule: blu Rebel -> arancio Run -> rosa Miss -> sabbia
+    const sun=eio(seg(.1,1.6)), glow=eio(seg(1.6,2.45)), sand=eio(seg(2.5,3.3));
+    let bg=this.lerpHex('#2F5A93','#E07B3E',sun);
+    if(glow>0) bg=this.lerpHex('#E07B3E','#E49A9A',glow);
+    if(sand>0) bg=this.lerpHex('#E49A9A','#EFE6D3',sand);
+    sp.style.backgroundColor = bg;
+    sp.style.color = this.lerpHex('#F7EFDD','#26211B', eio(seg(2.8,3.4)));
+
+    const lift=(ref,p,rise)=>{ const el=ref.current; if(!el) return; el.style.opacity=p.toFixed(3); el.style.transform='translateY('+((1-p)*rise).toFixed(2)+'px)'; };
+    lift(this.logoRef,logoP,26);
+    // silhouette crema finché il fondo è scuro, poi lascia emergere i colori reali del marchio
+    if(this.logoInkRef.current) this.logoInkRef.current.style.opacity=(1-eio(seg(2.75,3.35))).toFixed(3);
+    if(this.metaRef.current) this.metaRef.current.style.opacity=metaP.toFixed(3);
+    if(this.ruleRef.current) this.ruleRef.current.style.transform='scaleX('+ruleP.toFixed(3)+')';
+    if(this.lockupRef.current) this.lockupRef.current.style.transform='scale('+(.965+.035*eo(seg(0,1.9))).toFixed(4)+')';
+    (this._dots||[]).forEach((d,i)=>{ const p=eo(seg(1.45+i*.14,2.05+i*.14)); d.style.opacity=p.toFixed(3); d.style.transform='scale('+(.55+.45*p).toFixed(3)+')'; });
+  }
+
+  maybeEnd(){ if(this._spDone && (this._loadPct||0)>=1) this.endSplash(); }
+
+  setLoad(frac){
+    this._loadPct=Math.max(this._loadPct||0, Math.min(1, frac));
+    this.maybeEnd();
+  }
+
+  endSplash(){
+    if(this._splashGone) return;
+    this._splashGone=true;
+    clearTimeout(this._splashCap);
+    cancelAnimationFrame(this._spRaf);
+    this.spFrame(this.SPD);
+    const el=this.splashRef.current;
+    document.body.style.overflow='';
+    if(!el) return;
+    setTimeout(()=>this.handoff(el), 220);
+  }
+
+  /* Il logo della splash vola esattamente sul logo della hero (FLIP),
+     e il resto della pagina si compone attorno mentre arriva. */
+  handoff(el){
+    const root=this.rootRef.current;
+    const logo=this.logoRef.current;
+    const hero=root && root.querySelector('[data-hero-logo]');
+    if(!logo || !hero){
+      el.style.transition='opacity .9s ease'; el.style.opacity='0';
+      this.revealIntro();
+      setTimeout(()=>{ el.style.display='none'; }, 1000);
+      return;
+    }
+    const a=logo.getBoundingClientRect();
+    hero.style.transition='none';
+    hero.style.transform='none';
+    const b=hero.getBoundingClientRect();
+    const sc=b.width/a.width;
+
+    [this.metaRef.current, this.dotsRef.current].forEach(n=>{ if(n){ n.style.transition='opacity .3s ease'; n.style.opacity='0'; } });
+    el.style.transition='background-color .6s ease .1s';
+    el.style.backgroundColor='rgba(239,230,211,0)';
+
+    logo.style.transformOrigin='top left';
+    logo.style.transition='transform .95s cubic-bezier(.62,.02,.18,1)';
+    logo.style.transform='translate('+(b.left-a.left).toFixed(2)+'px,'+(b.top-a.top).toFixed(2)+'px) scale('+sc.toFixed(4)+')';
+
+    setTimeout(()=>this.revealIntro(), 340);
+    setTimeout(()=>{
+      hero.style.transition='opacity .3s ease';
+      hero.style.opacity='1';
+      logo.style.transition='transform .95s cubic-bezier(.62,.02,.18,1),opacity .3s ease';
+      logo.style.opacity='0';
+      setTimeout(()=>{ el.style.display='none'; }, 340);
+    }, 880);
+  }
+
+  revealIntro(){
+    (this._introReveal||[]).forEach((n,i)=>setTimeout(()=>{ n.style.opacity='1'; n.style.transform='none'; }, i*110));
+  }
+
+  preloadFrames(sh, urls){
+    const imgs=new Array(urls.length); let done=0, shown=false;
+    sh.bitmaps=imgs;
+    sh.canvas.addEventListener('contextlost', e=>{ e.preventDefault(); sh.canvas.style.opacity='0'; if(sh.baseImg) sh.baseImg.style.opacity='1'; });
+    sh.canvas.addEventListener('contextrestored', ()=>{ sh.ctx=sh.canvas.getContext('2d'); const k=sh.lastIdx; sh.lastIdx=null; if(this.drawFrame(sh, k||0)){ sh.canvas.style.opacity='1'; if(sh.baseImg) sh.baseImg.style.opacity='0'; } });
+    urls.forEach((u,i)=>{
+      const im=new Image(); im.decoding='async';
+      const settle=()=>{
+        imgs[i]=(im.naturalWidth>0)?im:null; done++;
+        if(!shown && imgs[0]){ shown=true; if(this.drawFrame(sh,0)){ sh.canvas.style.opacity='1'; if(sh.baseImg) sh.baseImg.style.opacity='0'; } }
+        this.setLoad(done/urls.length);
+        if(done===urls.length) this.applyScroll();
+      };
+      im.onload=settle; im.onerror=settle; im.src=u;
+    });
+  }
+
+  nearestLoaded(sh, i){
+    const b=sh.bitmaps; if(!b) return -1;
+    if(b[i]) return i;
+    for(let d=1; d<b.length; d++){
+      const a=i-d, z=i+d;
+      if(a>=0 && b[a]) return a;
+      if(z<b.length && b[z]) return z;
+    }
+    return -1;
+  }
+
+  /* Rotazione a dito: somma un offset alla rotazione scroll-driven,
+     non la sostituisce. touch-action:pan-y lascia lo scroll verticale al browser. */
+  initDrag(sh){
+    const box = sh.canvas ? sh.canvas.parentElement : sh.shirtEl;
+    if(!box) return;
+    box.style.touchAction='pan-y';
+    box.style.cursor='grab';
+    box.style.userSelect='none';
+    box.style.webkitUserSelect='none';
+    const width=()=>Math.max(box.getBoundingClientRect().width,1);
+    const paint=()=>{ if(this._dragRaf) return; this._dragRaf=requestAnimationFrame(()=>{ this._dragRaf=0; this.applyScroll(); }); };
+    let id=null, last=0, lastT=0, vel=0;
+
+    box.addEventListener('pointerdown', e=>{
+      if(e.pointerType==='mouse' && e.button!==0) return;
+      cancelAnimationFrame(sh.momentum);
+      id=e.pointerId; last=e.clientX; lastT=performance.now(); vel=0;
+      try{ box.setPointerCapture(id); }catch(x){}
+      box.style.cursor='grabbing';
+    });
+
+    box.addEventListener('pointermove', e=>{
+      if(id===null || e.pointerId!==id) return;
+      const dx=e.clientX-last; last=e.clientX;
+      const now=performance.now(), dt=Math.max(now-lastT,1); lastT=now;
+      vel=dx/dt;
+      sh.dragTurn=(sh.dragTurn||0)+dx/width();
+      paint();
+    });
+
+    const end=(e)=>{
+      if(id===null || (e && e.pointerId!==undefined && e.pointerId!==id)) return;
+      try{ box.releasePointerCapture(id); }catch(x){}
+      id=null; box.style.cursor='grab';
+      let v=vel*16/width();
+      if(Math.abs(v)<0.0008) return;
+      const decay=()=>{
+        v*=0.93;
+        sh.dragTurn=(sh.dragTurn||0)+v;
+        this.applyScroll();
+        if(Math.abs(v)>0.0004) sh.momentum=requestAnimationFrame(decay);
+      };
+      sh.momentum=requestAnimationFrame(decay);
+    };
+    box.addEventListener('pointerup', end);
+    box.addEventListener('pointercancel', end);
+    box.addEventListener('lostpointercapture', end);
+  }
+
+  drawFrame(sh, i){
+    if(!sh.ctx) return false;
+    const k=this.nearestLoaded(sh, i);
+    if(k<0) return false;
+    const im=sh.bitmaps[k];
+    const c=sh.canvas, ctx=sh.ctx;
+    const dpr=Math.min(window.devicePixelRatio||1, 2);
+    const w=c.clientWidth||316, h=c.clientHeight||368;
+    if(c.width!==Math.round(w*dpr) || c.height!==Math.round(h*dpr)){ c.width=Math.round(w*dpr); c.height=Math.round(h*dpr); }
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+    const s=Math.min(w/im.naturalWidth, h/im.naturalHeight);
+    const dw=im.naturalWidth*s, dh=im.naturalHeight*s;
+    ctx.drawImage(im, (w-dw)/2, (h-dh)/2, dw, dh);
+    sh.lastIdx=i;
+    return true;
+  }
+
+  frameList(key){
+    this._frameLists=this._frameLists||{};
+    if(!this._frameLists[key]){
+      const dir={run:'run_frames_web_offwhite', miss:'miss_frames_web_offwhite', rebel:'rebel_frames_web'}[key];
+      this._frameLists[key]=Array.from({length:72},(_,i)=>`uploads/${dir}/${key}_${String(i+1).padStart(3,'0')}.webp`);
+    }
+    return this._frameLists[key];
+  }
+
+  renderVals(){
+    const sheet=this.state.sheet ? this.SHIRTS[this.state.sheet] : null;
+    return {
+      rootRef:this.rootRef, stageRef:this.stageRef,
+      splashRef:this.splashRef, lockupRef:this.lockupRef, archRef:this.archRef,
+      logoRef:this.logoRef, logoInkRef:this.logoInkRef, metaRef:this.metaRef, ruleRef:this.ruleRef, dotsRef:this.dotsRef,
+      goRun:()=>this.scrollToId('run'), goMiss:()=>this.scrollToId('miss'), goRebel:()=>this.scrollToId('rebel'),
+      openRun:()=>this.setState({sheet:'run'}), openMiss:()=>this.setState({sheet:'miss'}), openRebel:()=>this.setState({sheet:'rebel'}),
+      closeSheet:()=>{
+        if(this.state.sheetClosing) return;
+        this.setState({sheetClosing:true});
+        clearTimeout(this._sheetT);
+        this._sheetT=setTimeout(()=>this.setState({sheet:null,sheetClosing:false}),360);
+      },
+      consentBg: this.state.wlConsent ? '#26211B' : 'rgba(255,255,255,.44)',
+      consentTick: this.state.wlConsent ? '#EFE6D3' : 'transparent',
+      sheet, sheetOpen:!!sheet,
+      sheetAnim: this.state.sheetClosing ? 'sheetDown .36s cubic-bezier(.4,0,.8,.35) both' : 'sheetUp .4s cubic-bezier(.16,.84,.3,1) both',
+      scrimAnim: this.state.sheetClosing ? 'scrimOut .32s ease both' : 'scrimIn .3s ease both',
+
+      wlName:this.state.wlName, wlEmail:this.state.wlEmail, wlModel:this.state.wlModel, wlSize:this.state.wlSize,
+      wlConsent:this.state.wlConsent, privacyOpen:this.state.privacyOpen,
+      setWlName:(e)=>{ this.setState({wlName:e.target.value}); this.clearErr('name'); },
+      setWlEmail:(e)=>{ this.setState({wlEmail:e.target.value}); this.clearErr('email'); },
+      setWlModel:(e)=>{ this.setState({wlModel:e.target.value}); this.clearErr('model'); },
+      setWlSize:(e)=>{ this.setState({wlSize:e.target.value}); this.clearErr('size'); },
+      toggleConsent:(e)=>{ this.setState({wlConsent:e.target.checked}); this.clearErr('consent'); },
+      togglePrivacy:()=>this.setState({privacyOpen:!this.state.privacyOpen}),
+      submitWl:()=>this.submitWl(),
+      wlOk:this.state.wlStatus==='ok', wlFormOpen:this.state.wlStatus!=='ok',
+      wlSending:this.state.wlStatus==='sending', wlIdle:this.state.wlStatus!=='sending',
+      okSize:this.state.okSize, okModel:this.state.okModel, wlErr:this.state.wlErr,
+      errName:this.state.wlErrs.name||'', errEmail:this.state.wlErrs.email||'',
+      errModel:this.state.wlErrs.model||'', errSize:this.state.wlErrs.size||'',
+      errConsent:this.state.wlErrs.consent||'',
+      modelColor:this.state.wlModel?'#26211B':'rgba(38,33,27,.5)',
+      sizeColor:this.state.wlSize?'#26211B':'rgba(38,33,27,.5)',
+    };
+  }
+}
+</script>
+</body>
+</html>

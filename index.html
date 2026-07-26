@@ -406,6 +406,9 @@ class Component extends DCLogic {
   componentDidMount(){
     const root=this.rootRef.current;
     if(!root) return;
+    /* iOS Safari non applica mai :active al tap se la pagina non ha
+       nessun listener touch: questo sblocca il feedback su tutti i bottoni. */
+    document.addEventListener('touchstart', function(){}, {passive:true});
     this.startSplash();
     const g=root.querySelector('[data-grain]'); if(g) g.style.opacity=String(this.props.grain ?? 0.12);
     this.spins=this.props.spins ?? 1;

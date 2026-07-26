@@ -21,7 +21,7 @@ body{background:#16110D;-webkit-font-smoothing:antialiased;text-rendering:optimi
 button{font:inherit;color:inherit;border:none;background:none;cursor:pointer}
 input,select{font:inherit;color:inherit}
 a{color:#E07B3E;text-decoration:none}
-a:hover{color:#C0492F}
+a:active{color:#C0492F}
 ::selection{background:#E07B3E;color:#EFE6D3}
 [data-vp]::-webkit-scrollbar{width:0;height:0}
 @keyframes sunrise{from{transform:translateY(72%) scale(.84);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
@@ -33,7 +33,7 @@ a:hover{color:#C0492F}
 @keyframes scrimIn{from{opacity:0}to{opacity:1}}
 @keyframes scrimOut{from{opacity:1}to{opacity:0}}
 a{color:#26211B;text-decoration:underline;text-underline-offset:3px}
-a:hover{color:#E07B3E}
+a:active{color:#E07B3E}
 input::placeholder{color:rgba(38,33,27,.5);opacity:1}
 @media (prefers-reduced-motion:reduce){[data-reveal],[data-fade]{transition-duration:.2s!important;transform:none!important}}
 @media (max-width:768px){#malammoreRoot{width:100%!important;max-width:100%!important}}
@@ -62,17 +62,17 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
     <div style="display:flex;align-items:baseline;justify-content:space-between;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding:0 0 14px">
       <span>Le stampe</span><span>&euro;20</span>
     </div>
-    <button onClick="{{ goRun }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease" style-hover="padding-left:14px;color:#E07B3E" style-active="padding-left:14px;color:#E07B3E">
+    <button onClick="{{ goRun }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease" style-active="padding-left:14px;color:#E07B3E">
       <span style="width:9px;height:9px;border-radius:50%;background:#E07B3E;flex:none"></span>
       <span style="flex:1;font-family:'Ws Paradose',serif;font-style:italic;font-size:26px;line-height:1">Run</span>
       <span style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(38,33,27,.42)">01</span>
     </button>
-    <button onClick="{{ goMiss }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease" style-hover="padding-left:14px;color:#D9797C" style-active="padding-left:14px;color:#D9797C">
+    <button onClick="{{ goMiss }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease" style-active="padding-left:14px;color:#D9797C">
       <span style="width:9px;height:9px;border-radius:50%;background:#E49A9A;flex:none"></span>
       <span style="flex:1;font-family:'Ws Paradose',serif;font-style:italic;font-size:26px;line-height:1">Miss</span>
       <span style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(38,33,27,.42)">02</span>
     </button>
-    <button onClick="{{ goRebel }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);border-bottom:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease" style-hover="padding-left:14px;color:#2F5A93" style-active="padding-left:14px;color:#2F5A93">
+    <button onClick="{{ goRebel }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);border-bottom:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease" style-active="padding-left:14px;color:#2F5A93">
       <span style="width:9px;height:9px;border-radius:50%;background:#2F5A93;flex:none"></span>
       <span style="flex:1;font-family:'Ws Paradose',serif;font-style:italic;font-size:26px;line-height:1">Rebel</span>
       <span style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(38,33,27,.42)">03</span>
@@ -262,7 +262,7 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
         <button disabled="disabled" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.45;cursor:default">Invio&hellip;</button>
       </sc-if>
       <sc-if value="{{ wlIdle }}" hint-placeholder-val="{{ true }}">
-        <button onClick="{{ submitWl }}" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:transform .18s ease,box-shadow .18s ease" style-hover="transform:translateY(-2px);box-shadow:0 10px 22px rgba(38,33,27,.28)" style-active="transform:translateY(0)">Avvisami</button>
+        <button onClick="{{ submitWl }}" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:transform .18s ease,box-shadow .18s ease" style-active="transform:translateY(-2px);box-shadow:0 10px 22px rgba(38,33,27,.28)">Avvisami</button>
       </sc-if>
     </div>
   </sc-if>
@@ -272,8 +272,8 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
   <h2 data-reveal style="margin:0 0 30px;font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:38px;line-height:1.02;letter-spacing:-.02em;color:#26211B;transition:opacity .85s ease,transform .85s ease">Crediti</h2>
 
   <div style="display:flex;flex-direction:column;border-top:1px solid rgba(38,33,27,.18)">
-    <div data-reveal style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14);transition:opacity .7s ease 0s,transform .7s ease 0s"><div style="flex:none;width:96px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding-top:4px">Ideazione</div><div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#2B2620"><a href="https://instagram.com/giovanni.griecotroiano" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:rgba(38,33,27,.35);transition:text-decoration-color .25s ease" style-hover="text-decoration-color:#26211B">Giovanni Grieco Troiano</a><br />Giuseppe Troiano</div></div>
-    <div data-reveal style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14);transition:opacity .7s ease .04s,transform .7s ease .04s"><div style="flex:none;width:96px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding-top:4px">Sito</div><div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#2B2620"><a href="https://instagram.com/giovanni.griecotroiano" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:rgba(38,33,27,.35);transition:text-decoration-color .25s ease" style-hover="text-decoration-color:#26211B">Giovanni Grieco Troiano</a></div></div>
+    <div data-reveal style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14);transition:opacity .7s ease 0s,transform .7s ease 0s"><div style="flex:none;width:96px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding-top:4px">Ideazione</div><div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#2B2620"><a href="https://instagram.com/giovanni.griecotroiano" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:rgba(38,33,27,.35);transition:text-decoration-color .25s ease" style-active="text-decoration-color:#26211B">Giovanni Grieco Troiano</a><br />Giuseppe Troiano</div></div>
+    <div data-reveal style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14);transition:opacity .7s ease .04s,transform .7s ease .04s"><div style="flex:none;width:96px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding-top:4px">Sito</div><div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#2B2620"><a href="https://instagram.com/giovanni.griecotroiano" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:rgba(38,33,27,.35);transition:text-decoration-color .25s ease" style-active="text-decoration-color:#26211B">Giovanni Grieco Troiano</a></div></div>
   </div>
 
   <div data-reveal style="margin-top:22px;text-align:center;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.45);transition:opacity .8s ease,transform .8s ease">Malammore Beach Club &middot; Manfredonia &middot; Estate 2026</div>

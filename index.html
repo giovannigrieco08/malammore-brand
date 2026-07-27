@@ -194,10 +194,24 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
   <p data-reveal style="margin:16px 0 30px;font-family:'Switzer',sans-serif;font-weight:400;font-size:17px;line-height:1.45;color:#3A342C;text-wrap:pretty;transition:opacity .8s ease .05s,transform .8s ease .05s">Lasciaci la mail e il modello che cerchi. Ti scriviamo appena rientra, prima che lo sappiano gli altri.</p>
 
   <sc-if value="{{ wlOk }}" hint-placeholder-val="">
-    <div style="border:1.5px solid #C0492F;border-radius:16px;padding:32px 24px;text-align:center;background:rgba(192,73,47,.08)">
+    <div style="border:1.5px solid #C0492F;border-radius:16px;padding:28px 24px;text-align:center;background:rgba(192,73,47,.08)">
       <div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:38px;line-height:1;color:#C0492F">Ci sei.</div>
-      <div style="margin-top:12px;font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">Ti scriviamo appena torna la {{ okSize }} di {{ okModel }}.</div>
+      <div style="margin-top:12px;font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">Ti scriviamo appena rientra quello che hai chiesto.</div>
     </div>
+
+    <div style="margin-top:24px;display:flex;flex-direction:column;border-top:1px solid rgba(38,33,27,.18)">
+      <sc-for list="{{ wlEntries }}" as="entry" hint-placeholder-count="1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 0;border-bottom:1px solid rgba(38,33,27,.14)">
+          <div>
+            <div style="font-family:'Ws Paradose',serif;font-style:italic;font-size:20px;line-height:1.15;color:#26211B">{{ entry.model }}</div>
+            <div style="margin-top:3px;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(38,33,27,.5)">Taglia {{ entry.size }}</div>
+          </div>
+          <button onClick="{{ entry.edit }}" style="flex:none;font-family:'Switzer',sans-serif;font-size:12px;letter-spacing:.04em;color:#C0492F;text-decoration:underline;text-underline-offset:3px">Modifica</button>
+        </div>
+      </sc-for>
+    </div>
+
+    <button onClick="{{ addAnother }}" style="margin-top:22px;width:100%;min-height:52px;padding:16px;border-radius:999px;border:1.5px solid #C0492F;color:#C0492F;background:transparent;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:transform .18s ease,background-color .18s ease">+ Prenota un&#39;altra maglietta</button>
   </sc-if>
 
   <sc-if value="{{ wlFormOpen }}" hint-placeholder-val="{{ true }}">
@@ -262,7 +276,10 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
         <button disabled="disabled" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.45;cursor:default">Invio&hellip;</button>
       </sc-if>
       <sc-if value="{{ wlIdle }}" hint-placeholder-val="{{ true }}">
-        <button onClick="{{ submitWl }}" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:transform .18s ease,box-shadow .18s ease">Avvisami</button>
+        <button onClick="{{ submitWl }}" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:transform .18s ease,box-shadow .18s ease">{{ wlSubmitLabel }}</button>
+      </sc-if>
+      <sc-if value="{{ hasEntries }}" hint-placeholder-val="">
+        <button onClick="{{ cancelForm }}" style="align-self:center;font-family:'Switzer',sans-serif;font-size:13px;color:rgba(38,33,27,.55);text-decoration:underline;text-underline-offset:3px">Annulla</button>
       </sc-if>
     </div>
   </sc-if>
@@ -351,7 +368,19 @@ class Component extends DCLogic {
   SPD = 3.5;
 
   state = { sheet:null, sheetClosing:false, wlName:'', wlEmail:'', wlModel:'', wlSize:'', wlConsent:false,
-            wlStatus:'idle', wlErr:'', wlErrs:{}, privacyOpen:false, okSize:'', okModel:'' };
+            wlStatus:'idle', wlErr:'', wlErrs:{}, privacyOpen:false, wlEntries:[], wlEditIndex:null, view:'form' };
+
+  WL_KEY = 'malammore_wl_v1';
+  loadWl(){
+    try{
+      const raw=localStorage.getItem(this.WL_KEY);
+      if(!raw) return null;
+      const d=JSON.parse(raw);
+      if(!d || !Array.isArray(d.entries) || !d.entries.length) return null;
+      return d;
+    }catch(e){ return null; }
+  }
+  saveWl(d){ try{ localStorage.setItem(this.WL_KEY, JSON.stringify(d)); }catch(e){} }
 
   wlValidate(){
     const s=this.state, e={};
@@ -367,11 +396,23 @@ class Component extends DCLogic {
 
   clearErr(k){ const w={...this.state.wlErrs}; delete w[k]; this.setState({wlErrs:w}); }
 
+  editEntry(i){
+    const entry=this.state.wlEntries[i];
+    if(!entry) return;
+    this.setState({ view:'form', wlEditIndex:i, wlModel:entry.model, wlSize:entry.size, wlErrs:{}, wlErr:'' });
+  }
+  addAnother(){
+    this.setState({ view:'form', wlEditIndex:null, wlModel:'', wlSize:'', wlErrs:{}, wlErr:'' });
+  }
+  cancelForm(){
+    this.setState({ view:'confirm', wlErrs:{}, wlErr:'' });
+  }
+
   async submitWl(){
     const errs=this.wlValidate();
     if(Object.keys(errs).length){ this.setState({wlErrs:errs, wlErr:''}); return; }
     this.setState({wlErrs:{}, wlErr:'', wlStatus:'sending'});
-    const {wlName,wlEmail,wlModel,wlSize}=this.state;
+    const {wlName,wlEmail,wlModel,wlSize,wlEditIndex}=this.state;
     try{
       const res=await fetch('/.netlify/functions/waitlist',{
         method:'POST',
@@ -380,7 +421,11 @@ class Component extends DCLogic {
       });
       let body={}; try{ body=await res.json(); }catch(x){}
       if(!res.ok || !body.ok) throw new Error(body.error||'server');
-      this.setState({wlStatus:'ok', okSize:wlSize, okModel:wlModel});
+      const entries=[...this.state.wlEntries];
+      const entry={model:wlModel, size:wlSize};
+      if(wlEditIndex!=null && entries[wlEditIndex]) entries[wlEditIndex]=entry; else entries.push(entry);
+      this.saveWl({ name:wlName.trim(), email:wlEmail.trim(), entries });
+      this.setState({ wlStatus:'idle', wlEntries:entries, wlEditIndex:null, wlModel:'', wlSize:'', view:'confirm' });
     }catch(err){
       const m=String((err&&err.message)||'');
       const msg = m==='not_configured' || m==='config'
@@ -409,6 +454,9 @@ class Component extends DCLogic {
     /* iOS Safari non applica mai :active al tap se la pagina non ha
        nessun listener touch: questo sblocca il feedback su tutti i bottoni. */
     document.addEventListener('touchstart', function(){}, {passive:true});
+    /* Dispositivo gia' iscritto in precedenza: salta il form e mostra subito la conferma. */
+    const saved=this.loadWl();
+    if(saved) this.setState({ wlName:saved.name||'', wlEmail:saved.email||'', wlConsent:true, wlEntries:saved.entries, view:'confirm' });
     this.startSplash();
     const g=root.querySelector('[data-grain]'); if(g) g.style.opacity=String(this.props.grain ?? 0.12);
     this.spins=this.props.spins ?? 1;
@@ -774,9 +822,14 @@ class Component extends DCLogic {
       toggleConsent:(e)=>{ this.setState({wlConsent:e.target.checked}); this.clearErr('consent'); },
       togglePrivacy:()=>this.setState({privacyOpen:!this.state.privacyOpen}),
       submitWl:(e)=>this.pressHold(e.currentTarget,{transform:'translateY(-2px)',boxShadow:'0 10px 22px rgba(38,33,27,.28)'},260).then(()=>this.submitWl()),
-      wlOk:this.state.wlStatus==='ok', wlFormOpen:this.state.wlStatus!=='ok',
+      wlOk:this.state.view==='confirm', wlFormOpen:this.state.view==='form',
       wlSending:this.state.wlStatus==='sending', wlIdle:this.state.wlStatus!=='sending',
-      okSize:this.state.okSize, okModel:this.state.okModel, wlErr:this.state.wlErr,
+      wlEntries:this.state.wlEntries.map((en,i)=>({...en, edit:(e)=>this.pressHold(e.currentTarget,{color:'#8E3722'},200).then(()=>this.editEntry(i))})),
+      hasEntries:this.state.wlEntries.length>0,
+      addAnother:(e)=>this.pressHold(e.currentTarget,{transform:'translateY(-2px)',backgroundColor:'rgba(192,73,47,.08)'},260).then(()=>this.addAnother()),
+      cancelForm:()=>this.cancelForm(),
+      wlSubmitLabel: this.state.wlEditIndex!=null ? 'Salva modifica' : (this.state.wlEntries.length>0 ? 'Prenota' : 'Avvisami'),
+      wlErr:this.state.wlErr,
       errName:this.state.wlErrs.name||'', errEmail:this.state.wlErrs.email||'',
       errModel:this.state.wlErrs.model||'', errSize:this.state.wlErrs.size||'',
       errConsent:this.state.wlErrs.consent||'',

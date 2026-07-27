@@ -808,8 +808,8 @@ class Component extends DCLogic {
         clearTimeout(this._sheetT);
         this._sheetT=setTimeout(()=>this.setState({sheet:null,sheetClosing:false}),360);
       },
-      consentBg: this.state.wlConsent ? '#26211B' : 'rgba(255,255,255,.44)',
-      consentTick: this.state.wlConsent ? '#EFE6D3' : 'transparent',
+      consentBg: 'rgba(255,255,255,.44)',
+      consentTick: this.state.wlConsent ? '#26211B' : 'transparent',
       sheet, sheetOpen:!!sheet,
       sheetAnim: this.state.sheetClosing ? 'sheetDown .36s cubic-bezier(.4,0,.8,.35) both' : 'sheetUp .4s cubic-bezier(.16,.84,.3,1) both',
       scrimAnim: this.state.sheetClosing ? 'scrimOut .32s ease both' : 'scrimIn .3s ease both',

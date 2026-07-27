@@ -254,7 +254,7 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
 
       <div>
         <div style="display:flex;align-items:flex-start;gap:12px">
-          <input id="wl-consenso" type="checkbox" checked="{{ wlConsent }}" onChange="{{ toggleConsent }}" style="width:20px;height:20px;margin:1px 0 0;flex:none;appearance:none;-webkit-appearance:none;border:1px solid rgba(38,33,27,.42);border-radius:5px;background:{{ consentBg }};cursor:pointer;display:grid;place-content:center;transition:background .18s ease,border-color .18s ease" style-before="content:'';width:11px;height:11px;background:{{ consentTick }};clip-path:polygon(14% 44%,0 65%,50% 100%,100% 16%,80% 0%,43% 62%)">
+          <input id="wl-consenso" type="checkbox" checked="{{ wlConsent }}" onChange="{{ toggleConsent }}" style="width:20px;height:20px;margin:1px 0 0;flex:none;appearance:none;-webkit-appearance:none;border:1px solid rgba(38,33,27,.42);border-radius:5px;background-color:{{ consentBg }};background-image:{{ consentCheckImg }};background-repeat:no-repeat;background-position:center;background-size:11px 11px;cursor:pointer;transition:background-color .18s ease,border-color .18s ease">
           <div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">
             <label for="wl-consenso">Accetto di essere ricontattato via email per questa richiesta.</label>
             <button onClick="{{ togglePrivacy }}" style="font:inherit;color:#26211B;text-decoration:underline;text-underline-offset:3px;margin-left:6px">Privacy</button>
@@ -264,7 +264,7 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
         <sc-if value="{{ privacyOpen }}" hint-placeholder-val="">
           <div style="margin-top:14px;padding:16px 18px;border:1px solid rgba(38,33,27,.2);border-radius:12px;background:rgba(255,255,255,.32);display:flex;flex-direction:column;gap:8px">
             <div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">Conserviamo nome, email, modello e taglia solo per avvisarti quando la maglia rientra. Nessuna newsletter, nessuna cessione a terzi.</div>
-            <div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">Per cancellarti rispondi all&#39;email che ricevi o scrivi a <a href="mailto:ciao@malammore.it">ciao@malammore.it</a>: eliminiamo tutto entro 48 ore.</div>
+            <div style="font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">Per cancellarti rispondi all&#39;email che ricevi o scrivi a <a href="mailto:griecogiovanni08@gmail.com">griecogiovanni08@gmail.com</a>: eliminiamo tutto entro 48 ore.</div>
           </div>
         </sc-if>
       </div>
@@ -809,7 +809,7 @@ class Component extends DCLogic {
         this._sheetT=setTimeout(()=>this.setState({sheet:null,sheetClosing:false}),360);
       },
       consentBg: 'rgba(255,255,255,.44)',
-      consentTick: this.state.wlConsent ? '#26211B' : 'transparent',
+      consentCheckImg: this.state.wlConsent ? "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%2326211B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")" : 'none',
       sheet, sheetOpen:!!sheet,
       sheetAnim: this.state.sheetClosing ? 'sheetDown .36s cubic-bezier(.4,0,.8,.35) both' : 'sheetUp .4s cubic-bezier(.16,.84,.3,1) both',
       scrimAnim: this.state.sheetClosing ? 'scrimOut .32s ease both' : 'scrimIn .3s ease both',

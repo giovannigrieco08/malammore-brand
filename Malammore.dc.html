@@ -62,17 +62,17 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
     <div style="display:flex;align-items:baseline;justify-content:space-between;font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(38,33,27,.5);padding:0 0 14px">
       <span>Le stampe</span><span>&euro;20</span>
     </div>
-    <button onClick="{{ goRun }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease" style-active="padding-left:14px;color:#E07B3E">
+    <button onClick="{{ goRun }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease">
       <span style="width:9px;height:9px;border-radius:50%;background:#E07B3E;flex:none"></span>
       <span style="flex:1;font-family:'Ws Paradose',serif;font-style:italic;font-size:26px;line-height:1">Run</span>
       <span style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(38,33,27,.42)">01</span>
     </button>
-    <button onClick="{{ goMiss }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease" style-active="padding-left:14px;color:#D9797C">
+    <button onClick="{{ goMiss }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease">
       <span style="width:9px;height:9px;border-radius:50%;background:#E49A9A;flex:none"></span>
       <span style="flex:1;font-family:'Ws Paradose',serif;font-style:italic;font-size:26px;line-height:1">Miss</span>
       <span style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(38,33,27,.42)">02</span>
     </button>
-    <button onClick="{{ goRebel }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);border-bottom:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease" style-active="padding-left:14px;color:#2F5A93">
+    <button onClick="{{ goRebel }}" style="width:100%;display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid rgba(38,33,27,.16);border-bottom:1px solid rgba(38,33,27,.16);text-align:left;color:#26211B;transition:padding-left .18s ease,color .18s ease">
       <span style="width:9px;height:9px;border-radius:50%;background:#2F5A93;flex:none"></span>
       <span style="flex:1;font-family:'Ws Paradose',serif;font-style:italic;font-size:26px;line-height:1">Rebel</span>
       <span style="font-family:'Switzer',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(38,33,27,.42)">03</span>
@@ -262,7 +262,7 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
         <button disabled="disabled" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.45;cursor:default">Invio&hellip;</button>
       </sc-if>
       <sc-if value="{{ wlIdle }}" hint-placeholder-val="{{ true }}">
-        <button onClick="{{ submitWl }}" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:transform .18s ease,box-shadow .18s ease" style-active="transform:translateY(-2px);box-shadow:0 10px 22px rgba(38,33,27,.28)">Avvisami</button>
+        <button onClick="{{ submitWl }}" style="width:100%;min-height:52px;padding:16px;border-radius:999px;background:#26211B;color:#EFE6D3;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:transform .18s ease,box-shadow .18s ease">Avvisami</button>
       </sc-if>
     </div>
   </sc-if>
@@ -513,6 +513,18 @@ class Component extends DCLogic {
   }
 
   scrollToId(id){ const root=this.rootRef.current; if(!root) return; const el=root.querySelector('#'+id); if(!el) return; const top=el.getBoundingClientRect().top + window.pageYOffset; window.scrollTo({top, behavior:'smooth'}); }
+
+  /* Un tap dura poco: :active da solo sparisce prima che l'occhio lo registri.
+     Forziamo lo stato "premuto" per un tempo minimo fisso, poi eseguiamo l'azione. */
+  pressHold(el, styles, holdMs){
+    if(!el) return Promise.resolve();
+    const orig=el.getAttribute('style');
+    Object.assign(el.style, styles);
+    return new Promise((res)=>{
+      clearTimeout(el._pressHoldT);
+      el._pressHoldT=setTimeout(()=>{ el.setAttribute('style', orig); res(); }, holdMs);
+    });
+  }
   startSplash(){
     this._splashT0=performance.now();
     this._loadPct=0;
@@ -737,7 +749,9 @@ class Component extends DCLogic {
       rootRef:this.rootRef, stageRef:this.stageRef,
       splashRef:this.splashRef, lockupRef:this.lockupRef, archRef:this.archRef,
       logoRef:this.logoRef, logoInkRef:this.logoInkRef, metaRef:this.metaRef, ruleRef:this.ruleRef, dotsRef:this.dotsRef, sheetRef:this.sheetRef,
-      goRun:()=>this.scrollToId('run'), goMiss:()=>this.scrollToId('miss'), goRebel:()=>this.scrollToId('rebel'),
+      goRun:(e)=>this.pressHold(e.currentTarget,{paddingLeft:'14px',color:this.C.run},240).then(()=>this.scrollToId('run')),
+      goMiss:(e)=>this.pressHold(e.currentTarget,{paddingLeft:'14px',color:'#D9797C'},240).then(()=>this.scrollToId('miss')),
+      goRebel:(e)=>this.pressHold(e.currentTarget,{paddingLeft:'14px',color:this.C.rebel},240).then(()=>this.scrollToId('rebel')),
       openRun:()=>this.setState({sheet:'run'}), openMiss:()=>this.setState({sheet:'miss'}), openRebel:()=>this.setState({sheet:'rebel'}),
       closeSheet:()=>{
         if(this.state.sheetClosing) return;
@@ -759,7 +773,7 @@ class Component extends DCLogic {
       setWlSize:(e)=>{ this.setState({wlSize:e.target.value}); this.clearErr('size'); },
       toggleConsent:(e)=>{ this.setState({wlConsent:e.target.checked}); this.clearErr('consent'); },
       togglePrivacy:()=>this.setState({privacyOpen:!this.state.privacyOpen}),
-      submitWl:()=>this.submitWl(),
+      submitWl:(e)=>this.pressHold(e.currentTarget,{transform:'translateY(-2px)',boxShadow:'0 10px 22px rgba(38,33,27,.28)'},260).then(()=>this.submitWl()),
       wlOk:this.state.wlStatus==='ok', wlFormOpen:this.state.wlStatus!=='ok',
       wlSending:this.state.wlStatus==='sending', wlIdle:this.state.wlStatus!=='sending',
       okSize:this.state.okSize, okModel:this.state.okModel, wlErr:this.state.wlErr,

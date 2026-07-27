@@ -196,7 +196,8 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
   <sc-if value="{{ wlOk }}" hint-placeholder-val="">
     <div style="border:1.5px solid #C0492F;border-radius:16px;padding:28px 24px;text-align:center;background:rgba(192,73,47,.08)">
       <div style="font-family:'Ws Paradose',serif;font-style:italic;font-weight:400;font-size:38px;line-height:1;color:#C0492F">Ci sei.</div>
-      <div style="margin-top:12px;font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">Ti scriviamo appena rientra quello che hai chiesto.</div>
+      <div style="margin-top:12px;font-family:'Switzer',sans-serif;font-size:17px;line-height:1.45;color:#3A342C">Ti scriviamo un&#39;email appena rientra quello che hai chiesto.</div>
+      <div style="margin-top:10px;font-family:'Switzer',sans-serif;font-size:12px;line-height:1.4;color:rgba(58,52,44,.7)">Non &egrave; una prenotazione: non blocca nulla. Si compra al bar, in cassa, finch&eacute; c&#39;&egrave; disponibilit&agrave;.</div>
     </div>
 
     <div style="margin-top:24px;display:flex;flex-direction:column;border-top:1px solid rgba(38,33,27,.18)">
@@ -211,7 +212,7 @@ input::placeholder{color:rgba(38,33,27,.5);opacity:1}
       </sc-for>
     </div>
 
-    <button onClick="{{ addAnother }}" style="margin-top:22px;width:100%;min-height:52px;padding:16px;border-radius:999px;border:1.5px solid #C0492F;color:#C0492F;background:transparent;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:transform .18s ease,background-color .18s ease">+ Prenota un&#39;altra maglietta</button>
+    <button onClick="{{ addAnother }}" style="margin-top:22px;width:100%;min-height:52px;padding:16px;border-radius:999px;border:1.5px solid #C0492F;color:#C0492F;background:transparent;font-family:'Switzer',sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:transform .18s ease,background-color .18s ease">+ Aggiungi un altro modello</button>
   </sc-if>
 
   <sc-if value="{{ wlFormOpen }}" hint-placeholder-val="{{ true }}">
@@ -828,7 +829,7 @@ class Component extends DCLogic {
       hasEntries:this.state.wlEntries.length>0,
       addAnother:(e)=>this.pressHold(e.currentTarget,{transform:'translateY(-2px)',backgroundColor:'rgba(192,73,47,.08)'},260).then(()=>this.addAnother()),
       cancelForm:()=>this.cancelForm(),
-      wlSubmitLabel: this.state.wlEditIndex!=null ? 'Salva modifica' : (this.state.wlEntries.length>0 ? 'Prenota' : 'Avvisami'),
+      wlSubmitLabel: this.state.wlEditIndex!=null ? 'Salva modifica' : 'Avvisami',
       wlErr:this.state.wlErr,
       errName:this.state.wlErrs.name||'', errEmail:this.state.wlErrs.email||'',
       errModel:this.state.wlErrs.model||'', errSize:this.state.wlErrs.size||'',
